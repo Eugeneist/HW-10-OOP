@@ -15,38 +15,33 @@ class Person {
 
 
 class Employee extends Person {
-    constructor(firstName, lastName, age, birthDayDate, jobPosition) {
+    constructor(firstName, lastName, age, birthDayDate, jobPosition, salary) {
         super(firstName, lastName, age, birthDayDate);
         this.jobPosition = jobPosition;
-        this.birthDayDate = birthDayDate;
+        this.#salary = salary;
     }
 
-    #salary = 10000;
+    #salary;
 
     getYearSalary() {
         const myYearSalary = this.salary * 12;
         return `Моя годовая зарплата ${myYearSalary}$!`;
-    }
-
-    // celebrate() {
-    //     const today = new Date();
-    //     const day = (new Date(today.getFullYear(), this.birthDayDate.getMonth(), this.birthDayDate.getDate())).getDay();
-    //     if (day === 0 || day === 6) {
-    //         return "Happy Birthday, lets celebrate!";
-    //     } else {
-    //         return "Happy Birthday, but I need to work!";
-    //     }
-    // }
+    };
 
     celebrate() {
-        const day = (this.birthDayDate.setFullYear()).getDay();
-        if (day === 0 || day === 6) {
-            return "Happy Birthday, lets celebrate!";
-        } else {
+        if (isWeekend(this.birthDayDate))
+            return super.celebrate();
+        else
             return "Happy Birthday, but I need to work!";
-        }
     }
 
+}
+
+function isWeekend(date) {
+    const currentYear = new Date().getFullYear();
+    const birthdayThisYear = new Date(new Date(date).setFullYear(currentYear));
+    const day = new Date(birthdayThisYear).getDay();
+    return day === 0 || day === 6;
 }
 
 
