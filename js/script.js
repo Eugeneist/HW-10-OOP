@@ -29,7 +29,9 @@ class Employee extends Person {
     };
 
     celebrate() {
-        if (isWeekend(this.birthDayDate))
+        const currentYear = new Date().getFullYear();
+        const birthdayThisYear = new Date(new Date(this.birthDayDate).setFullYear(currentYear));
+        if (isWeekend(birthdayThisYear))
             return super.celebrate();
         else
             return "Happy Birthday, but I need to work!";
@@ -38,9 +40,7 @@ class Employee extends Person {
 }
 
 function isWeekend(date) {
-    const currentYear = new Date().getFullYear();
-    const birthdayThisYear = new Date(new Date(date).setFullYear(currentYear));
-    const day = new Date(birthdayThisYear).getDay();
+    const day = new Date(date).getDay();
     return day === 0 || day === 6;
 }
 
